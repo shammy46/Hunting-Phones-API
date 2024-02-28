@@ -12,13 +12,23 @@ const displayPhones = phones => {
     const phoneContainer = document.getElementById('phone-container');
     //clear phone container before searching and adding cards
     phoneContainer.textContent = '';
+    console.log(phones.length);
 
-    phones = phones.slice(0,12);
+    const showAllContainer = document.getElementById('show-all-container');
+
+    if (phones.length > 12) {
+
+        showAllContainer.classList.remove('hidden');
+    }
+    else
+        showAllContainer.classList.add('hidden');
+
+    phones = phones.slice(0, 12);
 
 
     phones.forEach(phone => {
         console.log(phone);
-        
+
 
         const phoneCard = document.createElement('div');
         phoneCard.classList = `card  bg-base-100 p-4 shadow-xl`;
@@ -36,12 +46,29 @@ const displayPhones = phones => {
 
         phoneContainer.appendChild(phoneCard);
     });
+
+    toggleLoadingSpinner(false);
 }
 
+//handle search button
 const handleSearch = () => {
+    toggleLoadingSpinner(true);
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     console.log(searchText);
     loadPhone(searchText);
+}
+
+//toggle loading spinner
+
+const toggleLoadingSpinner = (isloading) => {
+    const loadingSpinner = document.getElementById('loading-spinner');
+    if (isloading) {
+        loadingSpinner.classList.remove('hidden');
+
+    }
+    else {
+        loadingSpinner.classList.add('hidden');
+    }
 }
 
